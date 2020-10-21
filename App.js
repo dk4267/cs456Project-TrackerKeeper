@@ -1,21 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import HomeScreen from './src/screens/HomeScreen';
+import MainHabitsScreen from './src/screens/habits/MainHabitsScreen';
+import EditHabitsScreen from './src/screens/habits/EditHabitsScreen';
+import HabitsStatsScreen from './src/screens/habits/HabitsStatsScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import MainStatsScreen from './src/screens/summary/MainStatsScreen';
+import CalendarScreen from './src/screens/summary/CalendarScreen';
+import DayDetailScreen from './src/screens/summary/DayDetailScreen';
+
+import MainMoodScreen from './src/screens/mood/MainMoodScreen';
+import EmotionDetailScreen from './src/screens/mood/EmotionDetailScreen';
+import JournalScreen from './src/screens/mood/JournalScreen';
+import MoodStatsScreen from './src/screens/mood/MoodStatsScreen';
+
+import MainTasksScreen from './src/screens/tasks/MainTasksScreen';
+import EditTasksScreen from './src/screens/tasks/EditTasksScreen';
+import TasksStatsScreen from './src/screens/tasks/TasksStatsScreen';
+
+const navigator = createStackNavigator({
+  Home: HomeScreen,
+
+  MainHabits: MainHabitsScreen,
+  EditHabits: EditHabitsScreen,
+  HabitsStats: HabitsStatsScreen,
+
+  MainStats: MainStatsScreen,
+  Calendar: CalendarScreen,
+  DayDetail: DayDetailScreen,
+
+  MainMood: MainMoodScreen,
+  EmotionDetail: EmotionDetailScreen,
+  Journal: JournalScreen,
+  MoodStats: MoodStatsScreen,
+
+  MainTasks: MainTasksScreen,
+  EditTasks: EditTasksScreen,
+  TasksStats: TasksStatsScreen
+}, {
+  initialRouteName: 'Home',
+  defaultNavigationOptions: {
+    title: 'Tracker Keeper'
+  }
+})
+
+export default createAppContainer(navigator);
