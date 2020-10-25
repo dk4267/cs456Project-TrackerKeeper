@@ -41,7 +41,8 @@ const navigator = createStackNavigator({
 }, {
   initialRouteName: 'Home',
   defaultNavigationOptions: {
-    title: 'Tracker Keeper'
+    title: 'Tracker Keeper'  
+    
   }
 })
 
