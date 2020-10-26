@@ -11,7 +11,7 @@ const TasksStatsScreen = ({ navigation }) => {
     )
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     textStyles: {
         fontSize: 30
     }
