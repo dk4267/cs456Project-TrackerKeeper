@@ -1,13 +1,19 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
-const Goals = () => {
+const Goals = ({ nav }) => {
 
-    const goalList = ['Graduate with a 3.8 GPA', 'Move to Japan', 'Run a half marathon']
+    const goalList = ['Graduate with a 3.8 GPA', 'Move to Japan', 'Run a half marathon'];
 
     return (
         <View style={styles.mainStyle}>
-            <Text style={styles.titleStyle}>Long-Term Goals:</Text>
+            <View style={styles.headStyle}>
+                <TouchableOpacity>
+                    <AntDesign name="edit" size={25} onPress={() => nav.navigate('EditGoals')}/>
+                </TouchableOpacity>
+                <Text style={styles.titleStyle}>Long-Term Goals:</Text>
+            </View>
             <FlatList 
                 data={goalList}
                 keyExtractor={item => item}
@@ -20,6 +26,10 @@ const Goals = () => {
 const styles = StyleSheet.create({
     titleStyle: {
         fontSize: 24,
+        marginLeft: 10
+    },
+    headStyle: {
+        flexDirection: "row",
         marginVertical: 25
     },
     itemStyle: {

@@ -19,11 +19,22 @@ const HomeScreen = ({ navigation }) => {
                     <Text style={styles.textStyles} >Tasks</Text>
                 </TouchableOpacity>
             </View>
-            <Goals />
-            <Button title="Go to summary screen" onPress={() => navigation.navigate("Calendar")} />
-            <Button title="Go to edit goals screen" onPress={() => navigation.navigate("EditGoals")} />
+            <Goals nav={navigation}/>
         </View>
     )
+}
+
+HomeScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerStyle: {
+            backgroundColor: '#71B2E1'
+        },
+        headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("Calendar")} >
+                <Image style={styles.navIcon} source={require('./assets/AnalyticsLink.png')} />
+            </TouchableOpacity>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -54,6 +65,11 @@ const styles = StyleSheet.create({
     circleThree: {
         alignItems: "center",
         marginRight: 50
+    },
+    navIcon: {
+        height: 30,
+        width: 30,
+        marginRight: 15
     }
 
 });
