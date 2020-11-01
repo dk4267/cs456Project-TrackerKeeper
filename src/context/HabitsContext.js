@@ -48,7 +48,7 @@ const editHabit = (dispatch) => async (id, habitName, daysOfWeek, callback) => {
 }
 
 const addHabit = (dispatch) => async (habitName, daysOfWeek) => {
-    const habitData = { id: idCounter + 1, habitName: habitName, daysOfWeek: daysOfWeek };
+    const habitData = { id: idCounter + 1, habitName: habitName, daysOfWeek: daysOfWeek, checked: false, streak: 0 };
     idCounter += 1;
     //add to async storage
     //dispatch to reducer with payload habitname, daysofweek, empty arr for dates, and generate an id (how?)

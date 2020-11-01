@@ -3,7 +3,9 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Provider as HabitsProvider } from './src/context/HabitsContext'; 
 
-import HomeScreen from './src/screens/HomeScreen';
+import HomeScreen from './src/screens/main/HomeScreen';
+import EditGoalsScreen from './src/screens/main/EditGoalsScreen';
+
 import MainHabitsScreen from './src/screens/habits/MainHabitsScreen';
 import EditHabitsScreen from './src/screens/habits/EditHabitsScreen';
 import HabitsStatsScreen from './src/screens/habits/HabitsStatsScreen';
@@ -23,6 +25,7 @@ import TasksStatsScreen from './src/screens/tasks/TasksStatsScreen';
 
 const navigator = createStackNavigator({
   Home: HomeScreen,
+  EditGoals: EditGoalsScreen,
 
   MainHabits: MainHabitsScreen,
   EditHabits: EditHabitsScreen,
