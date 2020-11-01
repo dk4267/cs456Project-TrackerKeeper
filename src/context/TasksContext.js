@@ -8,4 +8,6 @@ const tasksReducer = (state, action) => {
     }
 }
 
-export const { Provider, Context } = createCustomContext(tasksReducer, {}, {});
+
+
+export const { Provider, Context } = createCustomContext(tasksReducer, {}, []);

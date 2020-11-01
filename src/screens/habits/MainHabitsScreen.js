@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable  } from 'react-native';
-
+import { Context } from '../../context/HabitsContext';
 import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
 
 let habits = [
@@ -47,6 +47,21 @@ const HabitCheckbox = (prop) => {
 };
 
 const MainHabitsScreen = ({ navigation }) => {
+
+    const { state, setHabits, getHabits } = useContext(Context);
+
+    useEffect(() => {
+        setHabits();
+        getHabits();
+        const listener = navigation.addListener('didFocus', () => {
+            getHabits();
+        });
+
+        return () => {
+            listener.remove();
+        }
+    }, [])
+
     return (
         
         <SafeAreaView style={styles.container}>

@@ -1,5 +1,7 @@
+import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Provider as HabitsProvider } from './src/context/HabitsContext'; 
 
 import HomeScreen from './src/screens/HomeScreen';
 import MainHabitsScreen from './src/screens/habits/MainHabitsScreen';
@@ -46,4 +48,12 @@ const navigator = createStackNavigator({
   }
 })
 
-export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+
+export default () => {
+  return (
+    <HabitsProvider>
+      <App />
+    </HabitsProvider>
+  )
+}
