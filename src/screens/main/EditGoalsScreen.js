@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Button, Image, TouchableOpacity, TextInput } from 'react-native';
+import { KeyboardAvoidingView, View, Text, StyleSheet, Button, Image, TouchableOpacity, Platform, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Context as GoalsContext } from '../../context/GoalsContext';
 
 const EditGoalsScreen = ({ navigation }) => {
@@ -10,18 +10,25 @@ const EditGoalsScreen = ({ navigation }) => {
     const [goalTwo, setGoalTwo] = useState(state[1]);
     const [goalThree, setGoalThree] = useState(state[2]);
 
+
     return (
-        <View style={styles.mainStyles}>
-            <Text style={styles.textStyles}>If you could choose only three goals to pursue, what would they be?</Text>
-            <Text style={styles.textStyles}>Write up to three long-term goals here, so you can remember what you are striving for every day!</Text>
-            <Text style={styles.textStyles} >Goal #1:</Text>
-            <TextInput style={styles.inputStyles} value={goalOne} maxLength={80} multiline={true} onChangeText={(text) => setGoalOne(text)}/>
-            <Text style={styles.textStyles}>Goal #2:</Text>
-            <TextInput style={styles.inputStyles} value={goalTwo} maxLength={80} multiline={true} onChangeText={(text) => setGoalTwo(text)}/>
-            <Text style={styles.textStyles}>Goal #3:</Text>
-            <TextInput style={styles.inputStyles} value={goalThree} maxLength={80} multiline={true} onChangeText={(text) => setGoalThree(text)}/>
-            <Button style={styles.buttonStyles} title='Save' onPress={() => editGoals(goalOne, goalTwo, goalThree, () => navigation.pop())}/>
-        </View>
+        <KeyboardAvoidingView style={styles.mainStyles} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.innerView}>
+                    <Text style={styles.textStyles}>If you could choose only three goals to pursue, what would they be?</Text>
+                    <Text style={styles.textStyles}>Write up to three long-term goals here, so you can remember what you are striving for every day!</Text>
+                    <Text style={styles.textStyles} >Goal #1:</Text>
+                    <TextInput style={styles.inputStyles} value={goalOne} multiline={true} maxLength={80} onChangeText={(text) => setGoalOne(text)}/>
+                    <Text style={styles.textStyles}>Goal #2:</Text>
+                    <TextInput style={styles.inputStyles} value={goalTwo} multiline={true} maxLength={80} onChangeText={(text) => setGoalTwo(text)}/>
+                    <Text style={styles.textStyles}>Goal #3:</Text>
+                    <TextInput style={styles.inputStyles} value={goalThree} multiline={true} maxLength={80} onChangeText={(text) => setGoalThree(text)}/>
+                    <TouchableOpacity style={styles.buttonStyles} onPress={() => editGoals(goalOne, goalTwo, goalThree, () => navigation.pop())}>
+                        <Text style={styles.buttonText}>Save</Text>
+                    </TouchableOpacity>
+                </View>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -45,11 +52,12 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         textAlign: "center",
     },
-    mainStyles: {
-        alignItems: "center",
-        
+    mainStyles: {     
         backgroundColor: '#BCE3FF',
-        flex: 1
+        flex: 1     
+    },
+    outerContainer: {
+        alignItems: "center",        
     },
     inputStyles: {
         backgroundColor: 'white',
@@ -63,15 +71,23 @@ const styles = StyleSheet.create({
         width: "95%"
     },
     buttonStyles: {
-        height: 50,
-        width: 150,
+        height: 45,
+        width: 60,
         padding: 10, 
-        backgroundColor: "#71B2E1"
+        backgroundColor: "#71B2E1",
+        alignSelf: "center"
     },
     navIcon: {
         height: 30,
         width: 30,
         marginRight: 15
+    },
+    buttonText: {
+        color: "black",
+        fontSize: 18
+    },
+    innerView: {
+        justifyContent: "flex-end"
     }
 
 });

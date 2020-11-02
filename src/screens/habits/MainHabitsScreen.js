@@ -48,10 +48,9 @@ const HabitCheckbox = (prop) => {
 
 const MainHabitsScreen = ({ navigation }) => {
 
-    const { state, setHabits, getHabits } = useContext(Context);
+    const { state, getHabits, addHabit } = useContext(Context);
 
     useEffect(() => {
-        setHabits();
         getHabits();
         const listener = navigation.addListener('didFocus', () => {
             getHabits();
@@ -65,7 +64,7 @@ const MainHabitsScreen = ({ navigation }) => {
     return (
         
         <SafeAreaView style={styles.container}>
-        <FAB icon="plus" style={styles.addButton} onPress={() => console.log('Add Pressed')} />    
+        <FAB icon="plus" style={styles.addButton} onPress={() => addHabit("Make bed")} />    
             <ScrollView style={styles.scrollView}>
                 <View style={styles.titleContainer}>
                 <Text style={styles.habitTitle}>

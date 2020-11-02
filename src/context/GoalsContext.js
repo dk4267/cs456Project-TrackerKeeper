@@ -17,8 +17,9 @@ const getGoals = (dispatch) => async () => {
         const response = await AsyncStorage.getItem('GOALS');
         if (response === null) {
             dispatch({type: 'get_goals', payload: []});
-        }
+        } else {
         dispatch({type: 'get_goals', payload: JSON.parse(response)});
+        }
     } catch (err) {
         console.log(err);
     }
