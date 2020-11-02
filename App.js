@@ -2,6 +2,7 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Provider as HabitsProvider } from './src/context/HabitsContext'; 
+import { Provider as GoalsProvider } from './src/context/GoalsContext';
 
 import HomeScreen from './src/screens/main/HomeScreen';
 import EditGoalsScreen from './src/screens/main/EditGoalsScreen';
@@ -56,7 +57,9 @@ const App = createAppContainer(navigator);
 export default () => {
   return (
     <HabitsProvider>
-      <App />
+      <GoalsProvider>
+        <App />
+      </GoalsProvider>
     </HabitsProvider>
   )
 }

@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { Context as GoalsContext } from '../context/GoalsContext';
+
 
 const Goals = ({ nav }) => {
 
-    const goalList = ['Graduate with a 3.8 GPA', 'Move to Japan', 'Run a half marathon'];
+    const { state, getGoals } = useContext(GoalsContext);
+
+    useEffect(() => {
+        getGoals();
+        const listener = nav.addListener('didFocus', () => {
+            getGoals();
+        });
+
+        return () => {
+            listener.remove();
+        }
+    }, [])
 
     return (
         <View style={styles.mainStyle}>
@@ -14,11 +27,11 @@ const Goals = ({ nav }) => {
                 </TouchableOpacity>
                 <Text style={styles.titleStyle}>Long-Term Goals:</Text>
             </View>
-            <FlatList 
-                data={goalList}
-                keyExtractor={item => item}
-                renderItem={({item}) => <Text style={styles.itemStyle}>{item}</Text>}
-            />
+            <View>
+                <Text style={styles.itemStyle} >{state[0]}</Text>
+                <Text style={styles.itemStyle} >{state[1]}</Text>
+                <Text style={styles.itemStyle} >{state[2]}</Text>
+            </View>
         </View>
     )
 }

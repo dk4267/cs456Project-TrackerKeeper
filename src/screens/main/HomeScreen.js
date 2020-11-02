@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Goals from '../../components/Goals';
 
 const HomeScreen = ({ navigation }) => {
+
     return (
         <View style={styles.mainStyles}>
             <TouchableOpacity style={styles.circleOne} onPress={() => navigation.navigate("MainMood")}>
