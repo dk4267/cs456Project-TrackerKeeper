@@ -1,11 +1,11 @@
 import { AsyncStorage } from 'react-native';
 import createCustomContext from './createCustomContext';
 
-let idCounter = 1;
 
 const habitsReducer = (state, action) => {
     switch (action.type) {
         case 'get_habits':
+            console.log("payload: " + action.payload);
             return action.payload;
         default: 
             return state;
@@ -19,7 +19,7 @@ const getHabits = (dispatch) => async () => {
         if (result === null) {
             dispatch({ type: 'get_habits', payload: []})
         } else {
-        dispatch({ type: 'get_habits', payload: result});
+        dispatch({ type: 'get_habits', payload: JSON.parse(result)});
         console.log(result);
         }
     } catch {
@@ -40,9 +40,7 @@ const editHabit = (dispatch) => async (id, habitName, callback) => {
 }
 
 const addHabit = (dispatch) => async (habitName) => {
-    await AsyncStorage.removeItem('HABITS');
-    const habitData = { id: idCounter, habitName: habitName, dateAdded: new Date(), checked: false, dates: [], streak: 0 };
-    idCounter += 1;
+    const habitData = { habitName: habitName, dateAdded: new Date(), checked: false, dates: [], streak: 0 };
     let habitsArray = [];
     try {
         let storedHabits = await AsyncStorage.getItem('HABITS');

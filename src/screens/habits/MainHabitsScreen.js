@@ -1,40 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable  } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable, FlatList  } from 'react-native';
 import { Context } from '../../context/HabitsContext';
 import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
-
-let habits = [
-    {
-        checked: true,
-        name: 'Meditate',
-        streak: 301
-    },
-    {
-        checked: false,
-        name: 'Run the trails',
-        streak: 50
-    },
-    {
-        checked: true,
-        name: 'Make my bed',
-        streak: 67
-    },
-    {
-        checked: false,
-        name: 'Write in my journal',
-        streak: 23
-    },
-    {
-        checked: false,
-        name: '',
-        streak: 0
-    },
-]
 
 let inspirationalInsight = "You completed 72% of your habits this week! Keep it up!";
 
 const HabitCheckbox = (prop) => {
-    const [checked, setChecked] = React.useState(prop.checked);
+    const [checked, setChecked] = useState(prop.checked);
   
     return (
         <Checkbox
@@ -46,9 +18,13 @@ const HabitCheckbox = (prop) => {
     );
 };
 
+
+
 const MainHabitsScreen = ({ navigation }) => {
 
     const { state, getHabits, addHabit } = useContext(Context);
+    const [addHabitActivated, setAddHabitActivated] = useState(false);
+    const [addText, setAddText] = useState('');
 
     useEffect(() => {
         getHabits();
@@ -59,12 +35,16 @@ const MainHabitsScreen = ({ navigation }) => {
         return () => {
             listener.remove();
         }
-    }, [])
+    }, [addHabitActivated])
+
+    const setUpAddHabit = () => {
+        setAddHabitActivated(true);
+    }
 
     return (
         
         <SafeAreaView style={styles.container}>
-        <FAB icon="plus" style={styles.addButton} onPress={() => addHabit("Make bed")} />    
+        <FAB icon="plus" style={styles.addButton} onPress={() => setUpAddHabit()} />    
             <ScrollView style={styles.scrollView}>
                 <View style={styles.titleContainer}>
                 <Text style={styles.habitTitle}>
@@ -75,14 +55,13 @@ const MainHabitsScreen = ({ navigation }) => {
                 
 
                 </View>
-                
-                    { 
-                        habits.map((item, key) => (
-                            <Card style={styles.habitCard} key={key}>
+                    <FlatList data={state} keyExtractor={(habit) => habit.habitName} renderItem={({item}) => {
+                        return (
+                            <Card style={styles.habitCard} key={item.habitName}>
                                 <View style={styles.habitItem}>
-                                    <HabitCheckbox style={styles.habitCheckbox} checked={item.checked} key={key} />
-                                    {(item.name ? 
-                                    <Text style={styles.habitName}>{item.name}</Text>:
+                                    <HabitCheckbox style={styles.habitCheckbox} checked={item.checked} key={item.habitName} />
+                                    {(item.habitName ? 
+                                    <Text style={styles.habitName}>{item.habitName}</Text>:
                                     <TextInput
                                         placeholder="New habit"
                                         style={styles.habitInput}
@@ -90,8 +69,20 @@ const MainHabitsScreen = ({ navigation }) => {
                                     <Text style={styles.habitStreak}>{item.streak}{" day\nstreak!"}</Text>
                                 </View>
                             </Card>
-                        ))
+                        )
+                    }} />
+                    {
+                        addHabitActivated ? <Card style={styles.habitCard} key="addHabit"><View style={styles.habitItem}><TextInput
+                        placeholder="New habit"
+                        style={styles.habitInput}
+                        onChangeText={text => setAddText(text)}
+                        onSubmitEditing={() => {
+                            addHabit(addText);
+                            setAddHabitActivated(false)}}
+                    /></View></Card> : null
                     }
+
+                    
                     <Text style={styles.inspirationalText}>{inspirationalInsight}</Text>  
                     <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => console.log('Stats Pressed')}>
                         See stats about your habits
@@ -169,7 +160,6 @@ const styles = StyleSheet.create({
     },
     habitStreak: {
         flexGrow: 0, 
-        marginLeft: 15,
     },
     inspirationalText: {
         fontSize:36,
