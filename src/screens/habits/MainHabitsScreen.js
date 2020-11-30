@@ -22,7 +22,7 @@ const HabitCheckbox = (prop) => {
 
 const MainHabitsScreen = ({ navigation }) => {
 
-    const { state, getHabits, addHabit, editHabit } = useContext(Context);
+    const { state, getHabits, addHabit, editHabit, deleteHabit } = useContext(Context);
     const [addHabitActivated, setAddHabitActivated] = useState(false);
     const [editHabitId, setEditHabitId] = useState(-1);
     const [addText, setAddText] = useState('');
@@ -44,7 +44,7 @@ const MainHabitsScreen = ({ navigation }) => {
         
         <SafeAreaView style={styles.container}>
         <FAB icon="plus" style={styles.addButton} onPress={() => setUpAddHabit()} />    
-            <ScrollView style={styles.scrollView}>
+            <View style={styles.scrollView}>
                 <View style={styles.titleContainer}>
                 <Text style={styles.habitTitle}>
                     Your Habits
@@ -66,12 +66,13 @@ const MainHabitsScreen = ({ navigation }) => {
                             editHabit(item.id, addText);
                             setEditHabitId(-1);}}
                     /></View></Card> :
-                            <Card style={styles.habitCard} key={item => item.id.toString()} onLongPress={() => setUpEditHabit(item.id)}>
+                            <Card style={styles.habitCard} key={item => item.id.toString()} onLongPress={() => setUpEditHabit(item.id)} >
                                 <View style={styles.habitItem}>
                                     <HabitCheckbox style={styles.habitCheckbox} checked={item.checked} key={item.habitName} />
                                   
                                     <Text style={styles.habitName}>{item.habitName}</Text>
                                     <Text style={styles.habitStreak}>{item.streak}{" day\nstreak!"}</Text>
+                                    <Text style={styles.removeHabit} onPress={() => deleteHabit(item.id)}> x</Text>
                                 </View>
                             </Card>
                             
@@ -93,7 +94,7 @@ const MainHabitsScreen = ({ navigation }) => {
                     <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => console.log('Stats Pressed')}>
                         See stats about your habits
                     </Button>  
-            </ScrollView>
+            </View>
       </SafeAreaView>
     )
 }
@@ -160,13 +161,19 @@ const styles = StyleSheet.create({
     habitName: {
         flexGrow: 1, 
         fontSize: 18,
-        width: 250,
+        width: 180,
         lineHeight: 36,
 
     },
     habitStreak: {
         flexGrow: 0, 
     },
+    removeHabit: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#9f32cf"
+    },
+
     inspirationalText: {
         fontSize:36,
         textAlign: 'center',

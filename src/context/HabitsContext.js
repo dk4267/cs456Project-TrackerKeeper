@@ -33,6 +33,20 @@ const getHabits = (dispatch) => async () => {
 const deleteHabit = (dispatch) => async (id) => {
     //delete habit from async storage
     //dispatch to reducer with payload id
+    let habitsArray = [];
+    try {
+        let storedHabits = await AsyncStorage.getItem('HABITS');
+        if (storedHabits !== null) {
+            habitsArray = JSON.parse(storedHabits);
+        }
+        
+        let targetHabits = habitsArray.filter(item => item.id !== id);
+        await AsyncStorage.removeItem('HABITS');
+        await AsyncStorage.setItem('HABITS', JSON.stringify(targetHabits));
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 
 const editHabit = (dispatch) => async (id, newHabitName) => {
@@ -108,4 +122,4 @@ const markHabit = (dispatch) => async (habitName, date) => {
     //dispatch to reducer dates, habitname, id, daysofweek
 }
 
-export const { Provider, Context } = createCustomContext(habitsReducer, { getHabits, addHabit, editHabit }, []);
+export const { Provider, Context } = createCustomContext(habitsReducer, { getHabits, addHabit, editHabit, deleteHabit }, []);
