@@ -28,13 +28,6 @@ const MainHabitsScreen = ({ navigation }) => {
 
     useEffect(() => {
         getHabits();
-        const listener = navigation.addListener('didFocus', () => {
-            getHabits();
-        });
-
-        return () => {
-            listener.remove();
-        }
     }, [addHabitActivated])
 
     const setUpAddHabit = () => {
@@ -60,12 +53,8 @@ const MainHabitsScreen = ({ navigation }) => {
                             <Card style={styles.habitCard} key={item.habitName}>
                                 <View style={styles.habitItem}>
                                     <HabitCheckbox style={styles.habitCheckbox} checked={item.checked} key={item.habitName} />
-                                    {(item.habitName ? 
-                                    <Text style={styles.habitName}>{item.habitName}</Text>:
-                                    <TextInput
-                                        placeholder="New habit"
-                                        style={styles.habitInput}
-                                    />)}
+                                  
+                                    <Text style={styles.habitName}>{item.habitName}</Text>
                                     <Text style={styles.habitStreak}>{item.streak}{" day\nstreak!"}</Text>
                                 </View>
                             </Card>
@@ -78,7 +67,7 @@ const MainHabitsScreen = ({ navigation }) => {
                         onChangeText={text => setAddText(text)}
                         onSubmitEditing={() => {
                             addHabit(addText);
-                            setAddHabitActivated(false)}}
+                            setAddHabitActivated(false);}}
                     /></View></Card> : null
                     }
 

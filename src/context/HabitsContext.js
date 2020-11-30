@@ -40,20 +40,35 @@ const editHabit = (dispatch) => async (id, habitName, callback) => {
 }
 
 const addHabit = (dispatch) => async (habitName) => {
-    const habitData = { habitName: habitName, dateAdded: new Date(), checked: false, dates: [], streak: 0 };
+
     let habitsArray = [];
+    let idNumber;
     try {
         let storedHabits = await AsyncStorage.getItem('HABITS');
         if (storedHabits !== null) {
             habitsArray = JSON.parse(storedHabits);
         }
+
+        let habitId = await AsyncStorage.getItem('HABIT_ID');
+        if (habitId !== null) {
+            let Id = JSON.parse(habitId);
+            idNumber = Id[0] + 1;
+        }
+        else {
+            idNumber = 1;
+        }
+        console.log("id number: " + idNumber);
+        const habitData = { id: idNumber, habitName: habitName, dateAdded: new Date(), checked: false, dates: [], streak: 0 };
+        console.log("habit data: " + habitData);
+        await AsyncStorage.removeItem('HABIT_ID');
         await AsyncStorage.removeItem('HABITS');
         habitsArray.push(habitData);
+        await AsyncStorage.setItem('HABIT_ID', JSON.stringify([idNumber]));
         await AsyncStorage.setItem('HABITS', JSON.stringify(habitsArray));
         const result = await AsyncStorage.getItem('HABITS');
         console.log(result);
     } catch (err) {
-
+        console.log(err);
     }
     //add to async storage
     //dispatch to reducer with payload habitname, daysofweek, empty arr for dates, and generate an id (how?)
