@@ -22,8 +22,9 @@ const HabitCheckbox = (prop) => {
 
 const MainHabitsScreen = ({ navigation }) => {
 
-    const { state, getHabits, addHabit } = useContext(Context);
+    const { state, getHabits, addHabit, editHabit } = useContext(Context);
     const [addHabitActivated, setAddHabitActivated] = useState(false);
+    const [editHabitId, setEditHabitId] = useState(-1);
     const [addText, setAddText] = useState('');
 
     useEffect(() => {
@@ -32,6 +33,11 @@ const MainHabitsScreen = ({ navigation }) => {
 
     const setUpAddHabit = () => {
         setAddHabitActivated(true);
+    }
+
+    const setUpEditHabit = (id) => {
+        setEditHabitId(id);
+        console.log("habit id to edit is " + id);
     }
 
     return (
@@ -50,7 +56,17 @@ const MainHabitsScreen = ({ navigation }) => {
                 </View>
                     <FlatList data={state} keyExtractor={(habit) => habit.habitName} renderItem={({item}) => {
                         return (
-                            <Card style={styles.habitCard} key={item.habitName}>
+                            
+                            editHabitId === item.id ? 
+                            <Card style={styles.habitCard} key={ item => item.id.toString()}><View style={styles.habitItem}><TextInput
+                        placeholder={item.habitName}
+                        style={styles.habitInput}
+                        onChangeText={text => setAddText(text)}
+                        onSubmitEditing={() => {
+                            editHabit(item.id, addText);
+                            setEditHabitId(-1);}}
+                    /></View></Card> :
+                            <Card style={styles.habitCard} key={item => item.id.toString()} onLongPress={() => setUpEditHabit(item.id)}>
                                 <View style={styles.habitItem}>
                                     <HabitCheckbox style={styles.habitCheckbox} checked={item.checked} key={item.habitName} />
                                   
@@ -58,6 +74,7 @@ const MainHabitsScreen = ({ navigation }) => {
                                     <Text style={styles.habitStreak}>{item.streak}{" day\nstreak!"}</Text>
                                 </View>
                             </Card>
+                            
                         )
                     }} />
                     {

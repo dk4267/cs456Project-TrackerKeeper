@@ -5,6 +5,8 @@ import createCustomContext from './createCustomContext';
 const habitsReducer = (state, action) => {
     switch (action.type) {
         case 'get_habits':
+        case 'add_habit':
+        case 'edit_habit':
             console.log("payload: " + action.payload);
             return action.payload;
         default: 
@@ -33,14 +35,38 @@ const deleteHabit = (dispatch) => async (id) => {
     //dispatch to reducer with payload id
 }
 
-const editHabit = (dispatch) => async (id, habitName, callback) => {
+const editHabit = (dispatch) => async (id, newHabitName) => {
     //edit habit in async storage
     //dispatch to reducer with payload id, habitname, daysofweek
     //if callback to navigate back, call callback funct
+    let habitsArray = [];
+    try {
+        let storedHabits = await AsyncStorage.getItem('HABITS');
+        if (storedHabits !== null) {
+            habitsArray = JSON.parse(storedHabits);
+        }
+       
+        let targetHabit = habitsArray.filter(item => item.id === id);
+        let otherHabits = habitsArray.filter(item => item.id !== id);
+
+        await AsyncStorage.removeItem('HABITS');
+        targetHabit[0].habitName = newHabitName;
+
+        otherHabits.push(targetHabit[0]);
+        console.log("target habits zero index:");
+        console.log(targetHabit[0]);
+        dispatch({action: 'edit_habit', payload: otherHabits});
+        
+        const result = await AsyncStorage.setItem('HABITS', JSON.stringify(otherHabits));
+        console.log(result);
+        getHabits();
+
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 const addHabit = (dispatch) => async (habitName) => {
-
     let habitsArray = [];
     let idNumber;
     try {
@@ -63,10 +89,12 @@ const addHabit = (dispatch) => async (habitName) => {
         await AsyncStorage.removeItem('HABIT_ID');
         await AsyncStorage.removeItem('HABITS');
         habitsArray.push(habitData);
+        dispatch({action: 'add_habit', payload: habitsArray})
         await AsyncStorage.setItem('HABIT_ID', JSON.stringify([idNumber]));
         await AsyncStorage.setItem('HABITS', JSON.stringify(habitsArray));
         const result = await AsyncStorage.getItem('HABITS');
         console.log(result);
+        getHabits();
     } catch (err) {
         console.log(err);
     }
@@ -80,4 +108,4 @@ const markHabit = (dispatch) => async (habitName, date) => {
     //dispatch to reducer dates, habitname, id, daysofweek
 }
 
-export const { Provider, Context } = createCustomContext(habitsReducer, { getHabits, addHabit }, []);
+export const { Provider, Context } = createCustomContext(habitsReducer, { getHabits, addHabit, editHabit }, []);
