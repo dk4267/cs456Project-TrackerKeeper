@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable  } from 'react-native';
+import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { Context } from '../../context/HabitsContext';
 import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 let habits = [
     {
         checked: true,
         name: 'Meditate',
-        streak: 301
+        streak: 3001
     },
     {
         checked: false,
@@ -88,12 +89,15 @@ const MainHabitsScreen = ({ navigation }) => {
                                         style={styles.habitInput}
                                     />)}
                                     <Text style={styles.habitStreak}>{item.streak}{" day\nstreak!"}</Text>
+                                    <TouchableOpacity style={styles.habitEdit} onPress={() => addHabit("Make bed")}>
+                                        <MaterialIcons name="edit" size={24} />
+                                    </TouchableOpacity>
                                 </View>
                             </Card>
                         ))
                     }
                     <Text style={styles.inspirationalText}>{inspirationalInsight}</Text>  
-                    <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => console.log('Stats Pressed')}>
+                    <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => navigation.navigate('HabitsStats')}>
                         See stats about your habits
                     </Button>  
             </ScrollView>
@@ -157,19 +161,23 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         fontSize: 18,
-        width: 250,
+        width: 220,
         backgroundColor: '#F0F0F0'
     },
     habitName: {
         flexGrow: 1, 
         fontSize: 18,
-        width: 250,
+        width: 220,
         lineHeight: 36,
 
     },
     habitStreak: {
         flexGrow: 0, 
         marginLeft: 15,
+        width: 65,
+    },
+    habitEdit: {
+        flexGrow: 0, 
     },
     inspirationalText: {
         fontSize:36,
