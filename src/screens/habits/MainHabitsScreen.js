@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable, FlatList  } from 'react-native';
+import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable, FlatList, TouchableOpacity  } from 'react-native';
 import { Context } from '../../context/HabitsContext';
 import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 let inspirationalInsight = "You completed 72% of your habits this week! Keep it up!";
 
@@ -72,8 +73,12 @@ const MainHabitsScreen = ({ navigation }) => {
                                   
                                     <Text style={styles.habitName}>{item.habitName}</Text>
                                     <Text style={styles.habitStreak}>{item.streak}{" day\nstreak!"}</Text>
-                                    <Text style={styles.removeHabit} onPress={() => deleteHabit(item.id)}> x</Text>
-                                </View>
+                                    
+                                    {/* <TouchableOpacity style={styles.habitEdit} onPress={() => addHabit("Make bed")}>
+                                            
+                                        </TouchableOpacity> */}
+                                        <MaterialIcons name="delete-forever" style={styles.removeHabit} size={30} onPress={() => deleteHabit(item.id)} />
+                                    </View>
                             </Card>
                             
                         )
@@ -91,7 +96,7 @@ const MainHabitsScreen = ({ navigation }) => {
 
                     
                     <Text style={styles.inspirationalText}>{inspirationalInsight}</Text>  
-                    <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => console.log('Stats Pressed')}>
+                    <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => navigation.navigate('HabitsStats')}>
                         See stats about your habits
                     </Button>  
             </View>
@@ -155,7 +160,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         fontSize: 18,
-        width: 250,
+        width: 220,
         backgroundColor: '#F0F0F0'
     },
     habitName: {
@@ -167,11 +172,12 @@ const styles = StyleSheet.create({
     },
     habitStreak: {
         flexGrow: 0, 
+        marginLeft: 15,
+        width: 65,
     },
+
     removeHabit: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: "#9f32cf"
+        flexGrow: 0, 
     },
 
     inspirationalText: {
