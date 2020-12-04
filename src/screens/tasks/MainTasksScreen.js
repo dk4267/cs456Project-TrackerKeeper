@@ -63,7 +63,7 @@ const MainTasksScreen = ({ navigation }) => {
     return (
         
         <SafeAreaView style={styles.container}>
-        <FAB icon="plus" style={styles.addButton} onPress={() => addTasks("Make bed")} />    
+        <FAB icon="plus" style={styles.addButton} onPress={() => navigation.navigate('EditTasks')} />    
             <ScrollView style={styles.scrollView}>
                 <View style={styles.titleContainer}>
                 
