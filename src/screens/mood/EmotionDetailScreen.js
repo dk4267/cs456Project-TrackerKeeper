@@ -13,7 +13,7 @@ const EmotionDetailScreen = ({ navigation }) => {
             
             <ScrollView>
                 <Text/>
-                <Text style={styles.titleText}>Choose what emotions apply today</Text>
+                <Text style={styles.titleText}>Choose what emotion applies today</Text>
                 <Text/>
                 <View style={styles.flexBox1}>
 
@@ -117,12 +117,12 @@ const EmotionDetailScreen = ({ navigation }) => {
                 <Text style={styles.titleText}>Write in</Text>
                 <TextInput style={styles.inputStyles} value={mood} multiline={true} maxLength={80} onChangeText={(text) => setMood(text)}/>
                 <View style={styles.flexBox3}><Button
-                  onPress={() => alert("This is a button!")}
+                  onPress={() => alert("Mood Saved")}
                   title="Save mood"
                   
                 />
                 <Button style={styles.statsButton} labelStyle={styles.statsButtonText}
-                  onPress={() => alert("This is a button!")}
+                  onPress={() => alert("Mood Removed")}
                   title="Remove mood"
                   
                 /></View>
@@ -134,30 +134,40 @@ const EmotionDetailScreen = ({ navigation }) => {
                 />
                 </View>
 
-
+                <Text style={styles.textStyles2}>Icons created by Austin Condiff from Noun Project</Text>
             </ScrollView>
-        
+            
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#71B2E1',
+        backgroundColor: '#121212',
         
     },
     
     titleText:{
+        color: 'white',
         fontSize: 30, 
         textAlign: 'center',
         fontWeight: 'bold' ,
     
     },
     textStyles: {
+        color: 'white',
         fontSize: 30,
         padding: 10,
 
     },
+    textStyles2: {
+        
+        color: 'white',
+        justifyContent: 'flex-end',
+        alignSelf:'center',
+        alignItems: 'center',
+        fontSize: 12
+    }, 
     flexBox1: {
         flex: 1,
         flexDirection: 'row',
@@ -196,13 +206,13 @@ const styles = StyleSheet.create({
     backroundStyles: {
         flex: 1,
         justifyContent: 'center',
-        width: 160,
+        width: 150,
         height: 150,       
     },
     buttonStyles: {
         
-        width: 175,
-        height: 175,       
+        width: 150,
+        height: 150,       
     },
     statsButton: {
         height: 50,

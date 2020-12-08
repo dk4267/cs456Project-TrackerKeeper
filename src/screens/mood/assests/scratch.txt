@@ -1,0 +1,4 @@
+{/* <Text style={styles.textStyles}>Mood Stat Screen!</Text>
+            <Button title="Go to main stats screen" onPress={() => navigation.navigate('MainStats')}/>
+            <Button title="Go to main mood screen" onPress={() => navigation.navigate('MainMood')}/>
+            <Button title="Go to home screen" onPress={() => navigation.navigate('Home')}/> */}

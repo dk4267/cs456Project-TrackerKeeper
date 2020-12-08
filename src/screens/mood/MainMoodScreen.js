@@ -10,7 +10,7 @@ const MainMoodScreen = ({ navigation }) => {
             <Text/> 
             <Text/> 
             <Text/>
-            <View style ={{ flexDirection:'row'}}>
+            <View style ={{ flexDirection:'row', justifyContent: 'center'}}>
                 
                 <ImageBackground 
                 style={styles.backroundStyles} 
@@ -82,24 +82,37 @@ const MainMoodScreen = ({ navigation }) => {
                 <Text style={{width:15}}/>
 
             </View>
+            <Text></Text>
+            <Text style={styles.textStyles2}>Icons created by Austin Condiff from Noun Project</Text>
+                        
         </View>
     )
 }
 
+
+
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#71B2E1',
+        backgroundColor: '#121212',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
     textStyles: {
-        color: 'black',
+        color: 'white',
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 30
-    },    
+    },  
+    textStyles2: {
+        
+        color: 'white',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        fontSize: 12
+    },  
     buttonStyles: {
+        
         
         width: 75,
         height: 75,       
@@ -111,6 +124,7 @@ const styles = StyleSheet.create({
         height: 75,       
     },
     ratingStyles: {  
+        color: 'white',
         fontSize:40       
     },
     spacerStyles:{

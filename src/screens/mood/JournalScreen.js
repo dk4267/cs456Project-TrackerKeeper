@@ -16,6 +16,7 @@ const JournalScreen = ({ navigation}) => {
 
 const styles = StyleSheet.create({
     textStyles: {
+        color: 'white',
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#71B2E1',
+        backgroundColor: '#121212',
         justifyContent: 'center',
         justifyContent: 'space-around',
         padding: 10,
