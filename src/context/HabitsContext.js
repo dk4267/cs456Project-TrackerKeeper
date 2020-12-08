@@ -7,6 +7,7 @@ const habitsReducer = (state, action) => {
         case 'get_habits':
         case 'add_habit':
         case 'edit_habit':
+        case 'mark_habit':
             console.log("payload: " + action.payload);
             return action.payload;
         default: 
@@ -73,7 +74,6 @@ const editHabit = (dispatch) => async (id, newHabitName) => {
         
         const result = await AsyncStorage.setItem('HABITS', JSON.stringify(otherHabits));
         console.log(result);
-        getHabits();
 
     } catch (err) {
         console.log(err);
@@ -108,7 +108,6 @@ const addHabit = (dispatch) => async (habitName) => {
         await AsyncStorage.setItem('HABITS', JSON.stringify(habitsArray));
         const result = await AsyncStorage.getItem('HABITS');
         console.log(result);
-        getHabits();
     } catch (err) {
         console.log(err);
     }
@@ -117,9 +116,41 @@ const addHabit = (dispatch) => async (habitName) => {
     //if callback, callback()
 }
 
-const markHabit = (dispatch) => async (habitName, date) => {
+const markHabit = (dispatch) => async (id, checkedStatus) => {
     //edit habit in async storage to update date
     //dispatch to reducer dates, habitname, id, daysofweek
+    let habitsArray = [];
+    try {
+        let storedHabits = await AsyncStorage.getItem('HABITS');
+        if (storedHabits !== null) {
+            habitsArray = JSON.parse(storedHabits);
+        }
+       
+        let targetHabit = habitsArray.filter(item => item.id === id);
+        let otherHabits = habitsArray.filter(item => item.id !== id);
+
+        await AsyncStorage.removeItem('HABITS');
+        targetHabit[0].checked = checkedStatus;
+        if (checkedStatus) {
+            targetHabit[0].dates.push(new Date());
+            targetHabit[0].streak += 1;
+        }
+        else {
+            targetHabit[0].dates.pop();
+            targetHabit[0].streak -= 1;
+        }
+        console.log("marked habit: " + targetHabit[0]);
+
+        otherHabits.push(targetHabit[0]);
+        dispatch({action: 'mark_habit', payload: otherHabits});
+        
+        const result = await AsyncStorage.setItem('HABITS', JSON.stringify(otherHabits));
+        console.log(result);
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 }
 
-export const { Provider, Context } = createCustomContext(habitsReducer, { getHabits, addHabit, editHabit, deleteHabit }, []);
+export const { Provider, Context } = createCustomContext(habitsReducer, { getHabits, addHabit, editHabit, deleteHabit, markHabit }, []);
