@@ -16,7 +16,7 @@ const MainHabitsScreen = ({ navigation }) => {
 
     useEffect(() => {
         getHabits();
-    })
+    }, [state]);
 
     const setUpAddHabit = () => {
         setAddHabitActivated(true);
@@ -46,7 +46,7 @@ const MainHabitsScreen = ({ navigation }) => {
                         
                             
                             editHabitId === item.id ? 
-                            <Card style={styles.habitCard} key={ item => item.habitName}><View style={styles.habitItem}><TextInput
+                            <Card style={styles.habitCard} key={ item.habitName}><View style={styles.habitItem}><TextInput
                         placeholder={item.habitName}
                         style={styles.habitInput}
                         onChangeText={text => setAddText(text)}
@@ -54,7 +54,7 @@ const MainHabitsScreen = ({ navigation }) => {
                             editHabit(item.id, addText);
                             setEditHabitId(-1);}}
                     /></View></Card> :
-                            <Card style={styles.habitCard} key={item => item.habitName} onLongPress={() => setUpEditHabit(item.id)} >
+                            <Card style={styles.habitCard} key={item.habitName} onLongPress={() => setUpEditHabit(item.id)} >
                                 <View style={styles.habitItem}>
                                     <Checkbox style={styles.habitCheckbox} status={item.checked ? 'checked' : 'unchecked'} onPress={() => markHabit(item.id, !item.checked)} />
                                   

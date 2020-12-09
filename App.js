@@ -9,7 +9,6 @@ import HomeScreen from './src/screens/main/HomeScreen';
 import EditGoalsScreen from './src/screens/main/EditGoalsScreen';
 
 import MainHabitsScreen from './src/screens/habits/MainHabitsScreen';
-import EditHabitsScreen from './src/screens/habits/EditHabitsScreen';
 import HabitsStatsScreen from './src/screens/habits/HabitsStatsScreen';
 
 import MainStatsScreen from './src/screens/summary/MainStatsScreen';
@@ -22,7 +21,6 @@ import JournalScreen from './src/screens/mood/JournalScreen';
 import MoodStatsScreen from './src/screens/mood/MoodStatsScreen';
 
 import MainTasksScreen from './src/screens/tasks/MainTasksScreen';
-import EditTasksScreen from './src/screens/tasks/EditTasksScreen';
 import TasksStatsScreen from './src/screens/tasks/TasksStatsScreen';
 
 const navigator = createStackNavigator({
@@ -30,7 +28,6 @@ const navigator = createStackNavigator({
   EditGoals: EditGoalsScreen,
 
   MainHabits: MainHabitsScreen,
-  EditHabits: EditHabitsScreen,
   HabitsStats: HabitsStatsScreen,
 
   MainStats: MainStatsScreen,
@@ -43,7 +40,6 @@ const navigator = createStackNavigator({
   MoodStats: MoodStatsScreen,
 
   MainTasks: MainTasksScreen,
-  EditTasks: EditTasksScreen,
   TasksStats: TasksStatsScreen
 }, {
   initialRouteName: 'Home',
