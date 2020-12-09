@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput, ScrollView, TouchableWithoutFeedback, ImageBackground, Image } from 'react-native';
 import { Directions } from 'react-native-gesture-handler';
+import {Colors} from '../../components/DarkTheme';
 
 
 const EmotionDetailScreen = ({ navigation }) => {
@@ -116,18 +117,20 @@ const EmotionDetailScreen = ({ navigation }) => {
                 </View>
                 <Text style={styles.titleText}>Write in</Text>
                 <TextInput style={styles.inputStyles} value={mood} multiline={true} maxLength={80} onChangeText={(text) => setMood(text)}/>
-                <View style={styles.flexBox3}><Button
-                  onPress={() => alert("Mood Saved")}
-                  title="Save mood"
-                  
-                />
-                <Button style={styles.statsButton} labelStyle={styles.statsButtonText}
-                  onPress={() => alert("Mood Removed")}
-                  title="Remove mood"
-                  
-                /></View>
                 <View style={styles.flexBox3}>
-                <Button style={styles.statsButton} labelStyle={styles.statsButtonText}
+                    <Button style={styles.statsButton} color={Colors.dp08} labelStyle={styles.statsButtonText}
+                    onPress={() => alert("Mood Saved")}
+                    title="Save mood"
+                    
+                    />
+                    <Button style={styles.statsButton} color={Colors.dp08} labelStyle={styles.statsButtonText}
+                    onPress={() => alert("Mood Removed")}
+                    title="Remove mood"
+                    
+                    />
+                </View>
+                <View style={styles.flexBox3}>
+                <Button style={styles.statsButton} color={Colors.dp08}  labelStyle={styles.statsButtonText}
                   onPress={() => navigation.navigate('Journal')}
                   title="Next"
                   
@@ -143,26 +146,26 @@ const EmotionDetailScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#121212',
-        
+        backgroundColor: Colors.background,
+        padding: 10
     },
     
     titleText:{
-        color: 'white',
+        color: Colors.text.primary,
         fontSize: 30, 
         textAlign: 'center',
         fontWeight: 'bold' ,
     
     },
     textStyles: {
-        color: 'white',
+        color: Colors.text.primary,
         fontSize: 30,
         padding: 10,
 
     },
     textStyles2: {
         
-        color: 'white',
+        color: Colors.text.primary,
         justifyContent: 'flex-end',
         alignSelf:'center',
         alignItems: 'center',
@@ -193,10 +196,11 @@ const styles = StyleSheet.create({
     },
     
     inputStyles: {
-        backgroundColor: 'white',
+        backgroundColor: Colors.dp08,
+        borderBottomColor: Colors.mood,
+        borderBottomWidth:1,
+        color: Colors.text.secondary,
         fontSize: 18,
-        borderWidth: 1,
-        borderColor: 'black',
         marginBottom: 15,
         padding: 5,
         margin: 5,
@@ -210,15 +214,20 @@ const styles = StyleSheet.create({
         height: 150,       
     },
     buttonStyles: {
-        
+        opacity: .7,
         width: 150,
         height: 150,       
     },
     statsButton: {
         height: 50,
+        backgroundColor: Colors.mood
+    },
+    statsButtonText: {
+        color: Colors.text.darkPrimary
     },
     statsButtonContent: {
         height: 100,
+        color: Colors.mood
     }, 
 })
 

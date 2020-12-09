@@ -1,17 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback, ImageBackground} from 'react-native';
+import {Colors} from '../../components/DarkTheme';
 
 const MainMoodScreen = ({ navigation }) => {
     
     return (
         
         <View style={styles.container}>
-            <Text style={styles.textStyles}>How are you feeling today?</Text>
-            <Text/> 
-            <Text/> 
-            <Text/>
-            <View style ={{ flexDirection:'row', justifyContent: 'center'}}>
-                
+            <Text style={styles.header}>How are you feeling today?</Text>
+            <View style ={styles.moods}>
+
                 <ImageBackground 
                 style={styles.backroundStyles} 
                 source={require("./assests/red_circle.png")}>
@@ -67,7 +65,6 @@ const MainMoodScreen = ({ navigation }) => {
                 
                 
             </View>
-            <Text/>
             <View style ={{ flexDirection:'row'}}>
                 
                 <Text style={styles.ratingStyles}> 1</Text>
@@ -82,7 +79,6 @@ const MainMoodScreen = ({ navigation }) => {
                 <Text style={{width:15}}/>
 
             </View>
-            <Text></Text>
             <Text style={styles.textStyles2}>Icons created by Austin Condiff from Noun Project</Text>
                         
         </View>
@@ -93,27 +89,34 @@ const MainMoodScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#121212',
+        backgroundColor: Colors.background,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
-    textStyles: {
-        color: 'white',
+    moods: {
+        flexDirection:'row', 
+        justifyContent: 'center',
+    },
+    header: {
+        marginTop: 'auto',
+        paddingBottom: 10,
+        color: Colors.text.primary,
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 30
     },  
     textStyles2: {
-        
-        color: 'white',
+        color: Colors.text.secondary,
         justifyContent: 'flex-end',
         alignItems: 'center',
+        marginTop: 'auto',
         fontSize: 12
     },  
     buttonStyles: {
         
-        
+        opacity: 0.7,
         width: 75,
         height: 75,       
     },
@@ -124,11 +127,11 @@ const styles = StyleSheet.create({
         height: 75,       
     },
     ratingStyles: {  
-        color: 'white',
+        color: Colors.text.primary,
         fontSize:40       
     },
     spacerStyles:{
-        width: 35
+        width: 32
     }
 });
 
