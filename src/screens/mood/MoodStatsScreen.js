@@ -3,6 +3,7 @@ import { View, SafeAreaView, ScrollView ,Image, Text, StyleSheet, TextInput, Pre
 import { Context } from '../../context/HabitsContext';
 import { Card, List, Checkbox, FAB, Icon,  } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import {Colors} from '../../components/DarkTheme';
 import {
     LineChart,
     BarChart,
@@ -244,7 +245,8 @@ const MoodStatsScreen = ({ navigation }) => {
                 <Button 
                     title="Return to Main screen"
                     backgroundColor=''
-                    onPress={() => navigation.navigate('Home')}                 
+                    onPress={() => navigation.navigate('Home')}
+                    color={Colors.dp08}
                 />
                 </View>
                 <View style ={{ justifyContent: 'center', alignItems: 'center'}}>
@@ -290,7 +292,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'flex-start',
         width: 75,
-        height: 75,        
+        height: 75,
+        opacity: .7,
     },
     titleContainer: {
         color: 'white',

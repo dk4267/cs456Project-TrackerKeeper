@@ -1,6 +1,10 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+
+import {Colors} from './src/components/DarkTheme';
+
 import { Provider as HabitsProvider } from './src/context/HabitsContext'; 
 import { Provider as GoalsProvider } from './src/context/GoalsContext';
 import { Provider as TasksProvider } from './src/context/TasksContext';
@@ -44,8 +48,10 @@ const navigator = createStackNavigator({
 }, {
   initialRouteName: 'Home',
   defaultNavigationOptions: {
-    title: 'Tracker Keeper'  
-    
+    title: 'Tracker Keeper',
+    headerTitleStyle: {color:Colors.text.primary},
+    headerStyle: {backgroundColor: Colors.surface},
+    headerTintColor: Colors.text.primary
   }
 })
 
@@ -56,7 +62,8 @@ export default () => {
     <HabitsProvider>
       <GoalsProvider>
         <TasksProvider>
-          <App />
+          <StatusBar barStyle="light-content"/>
+          <App/>
         </TasksProvider>
       </GoalsProvider>
     </HabitsProvider>

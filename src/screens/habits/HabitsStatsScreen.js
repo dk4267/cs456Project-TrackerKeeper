@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { Context } from '../../context/HabitsContext';
-import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
+import { Card, List, Checkbox, Button, FAB, Icon, } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import {Colors} from '../../components/DarkTheme';
+
 import {
     LineChart,
     BarChart,
@@ -14,6 +16,19 @@ import {
 
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
+
+function hexToRgb(str) {
+    var n = parseInt(str.replace(/^#([\da-f])([\da-f])([\da-f])$/i,
+        '#$1$1$2$2$3$3').substring(1), 16);
+
+    return [
+        (n & 0xFF0000) >> 16,
+        (n & 0xFF00) >> 8,
+        n & 0xFF
+    ]
+}
+
+let chartColor = hexToRgb(Colors.habit);
 
 const HabitsComplete = {
     'today': {
@@ -35,7 +50,7 @@ const HabitsHistory = {
     datasets: [
         {
         data: [20, 40, 40, 50, 40, 50, 60, 70, 80, 40, 60, 70, 100, 90],
-        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(${chartColor[0]}, ${chartColor[1]}, ${chartColor[2]}, ${opacity})`, // optional
         strokeWidth: 2 // optional
         }
     ],
@@ -76,19 +91,27 @@ const habitStreak = {
     datasets: [
         {
         data: [45, 44, 28, 80, 99],
+        color: (opacity = 1) => `rgba(${chartColor[0]}, ${chartColor[1]}, ${chartColor[2]}, ${opacity})`, // optional
+        strokeWidth: 10, // optional
+        fillShadowGradient: Colors.habit,
+        fillShadowGradientOpacity: 1,
         }
     ]
 };
 
+
+
 const chartConfig = {
-    backgroundColor: '#ff0000',
-    backgroundGradientFrom: "#ff0000",
-    backgroundGradientTo: "#ff0000",
+    backgroundColor: Colors.habit,
+    backgroundGradientFrom: Colors.habit,
+    backgroundGradientTo: Colors.habit,
+    fillShadowGradient: Colors.habit,
+    fillShadowGradientOpacity: 1,
     backgroundGradientFromOpacity: 0,
     backgroundGradientToOpacity: 0,
     decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    labelColor: () => '#000000',
+    color: (opacity = 1) => `rgba(${chartColor[0]}, ${chartColor[1]}, ${chartColor[2]}, ${opacity})`,
+    labelColor: () => Colors.text.primary,
 };
 
 const MainHabitsScreen = ({ navigation }) => {
@@ -191,7 +214,7 @@ const MainHabitsScreen = ({ navigation }) => {
                         data={habitStreak}
                         width={screenWidth}
                         height={220}
-                        withCustomBarColorFromData={true}
+                        withCustomBarColorFromData={false}
                         flatColor={true}
                         chartConfig={
                             (function(){ // Current version of chart-kit is broken... Hack to get it to work
@@ -212,6 +235,7 @@ const MainHabitsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.background,
     },
     scrollView: {
         flex: 1,
@@ -225,22 +249,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 16,
         marginVertical: 10,
-        
+        color: Colors.text.primary,
     },
     statTitle: {
         fontSize: 24,
         fontWeight: 'bold',
+        color: Colors.text.primary,
     },
     progressOverview: {
         flex:0,
         flexDirection: 'row',
         justifyContent: 'space-around',
+        
 
     },
     progressOverviewLegend: {
         width: screenWidth/3,
         textAlign: 'center',
-
+        color: Colors.text.primary,
     },
     progressCalendar: {
         flex:0,
@@ -249,11 +275,12 @@ const styles = StyleSheet.create({
     },
     progressCalLabels : {
         marginTop: 50,
-        paddingLeft: 5
+        paddingLeft: 5,
+        color: Colors.text.primary,
     },
     progressCalDay : {
         height: 21,
-
+        color: Colors.text.primary,
     },   
 })
 

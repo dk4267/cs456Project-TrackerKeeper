@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Goals from '../../components/Goals';
+import {Colors} from '../../components/DarkTheme';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -27,9 +28,6 @@ const HomeScreen = ({ navigation }) => {
 
 HomeScreen.navigationOptions = ({ navigation }) => {
     return {
-        headerStyle: {
-            backgroundColor: '#71B2E1'
-        },
         headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("Calendar")} >
                 <Image style={styles.navIcon} source={require('./assets/AnalyticsLink.png')} />
@@ -40,14 +38,15 @@ HomeScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     textStyles: {
-        fontSize: 15
+        fontSize: 15,
+        color: Colors.text.primary,
     },
     circleStyles: {
         height: 100,
         width: 100
     },
     mainStyles: {
-        backgroundColor: '#BCE3FF',
+        backgroundColor: Colors.background,
         flex: 1
     },
     circleOne: {
