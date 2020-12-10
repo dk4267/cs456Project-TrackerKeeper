@@ -1,69 +1,38 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, SafeAreaView, ScrollView , Text, StyleSheet, TextInput, Pressable  } from 'react-native';
 import { Context } from '../../context/TasksContext';
 import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
+import EditTasks from './EditTasksScreen';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
-let tasks = [
-    {
-        checked: false,
-        name: 'Finish math homework',
-        date: 'Today \n at 12:00 pm'
-    },
-    {
-        checked: true,
-        name: 'Pick up medicine',
-        date: 'Tommorow \n at 10:00 am'
-    },
-    {
-        checked: true,
-        name: 'Study physics',
-        date: '10/16/2020 \n at 7:30pm'
-    },
-    {
-        checked: false,
-        name: '',
-        date:''
-    },
-    {
-        checked: false,
-        name: '',
-        date: ''
-    },
-]
+
 
 let inspirationalInsight = "You completed 15 tasks this week! Great job!";
 
-const TasksCheckbox = (prop) => {
-    const [checked, setChecked] = React.useState(prop.checked);
-  
-    return (
-        <Checkbox
-            status={checked ? 'checked' : 'unchecked'}
-            onPress={() => {
-                setChecked(!checked);
-            }}
-        />
-    );
-};
 
 const MainTasksScreen = ({ navigation }) => {
-    const { state, getTasks, addTasks } = useContext(Context);
+    const { state, getTasks, addTasks, editTask, deleteTask, markTask } = useContext(Context);
+    const [addTaskActivated, setAddTaskActivated] = useState(false);
+    const [editTaskId, setEditTaskId] = useState(-1);
+    const [addText, setAddText] = useState('');
     
     useEffect(() => {
         getTasks();
-        const listener = navigation.addListener('didFocus', () => {
-            getTasks();
-        });
 
-        return () => {
-            listener.remove();
-        }
-    }, [])
+    }, [state]);
+
+    const setUpAddTask = () => {
+        setAddTaskActivated(true);
+    }
+
+    const setUpEditTask = (id) => {
+        setEditTaskId(id);
+    }
 
     return (
         
         <SafeAreaView style={styles.container}>
-        <FAB icon="plus" style={styles.addButton} onPress={() => navigation.navigate('EditTasks')} />    
+        <FAB icon="plus" style={styles.addButton} onPress={() => setUpAddTask()} />    
             <ScrollView style={styles.scrollView}>
                 <View style={styles.titleContainer}>
                 
@@ -74,23 +43,31 @@ const MainTasksScreen = ({ navigation }) => {
                 </View>
                 
                     { 
-                        tasks.map((item, key) => (
-                            <Card style={styles.taskCard} key={key}>
+                        state.map((item) => (
+                            editTaskId === item.id ? 
+                            <Card style={styles.taskCard} key={ item.taskName}>
+                                <EditTasks taskId={item.id} initialName={item.taskName} editMode={true} callbackFunction={() => setEditTaskId(-1)}/>
+                                </Card> :
+                            <Card style={styles.taskCard} key={item.taskName} onLongPress={ () => setUpEditTask(item.id) }>
                                 <View style={styles.taskItem}>
-                                    <TasksCheckbox style={styles.taskCheckbox} checked={item.checked} key={key} />
-                                    {(item.name ? 
-                                    <Text style={styles.taskName}>{item.name}</Text>:
-                                    <TextInput
-                                        placeholder="New tasks"
-                                        style={styles.tasksInput}
-                                    />)}
+                                    <Checkbox style={styles.taskCheckbox} checked='unchecked' key={item.taskName} onPress={() => markTask(item.id)} />
+                                   
+                                    <Text style={styles.taskName}>{item.taskName}</Text>
+                                    
                                     <View style={styles.taskDate}>
-                                        <Text>{item.date}</Text>
+                                        <Text>{item.dueDate}</Text>
                                     </View>
+                                    <MaterialIcons name="delete-forever" style={styles.removeTask} size={30} onPress={() => deleteTask(item.id)} />
 
                                 </View>
                             </Card>
                         ))
+                    }
+                    {
+                        addTaskActivated ? 
+                        <Card style={styles.taskCard} key="addTask">
+                            <EditTasks taskId={-1} initialName="" editMode={false} callbackFunction={() => setAddTaskActivated(false)}/>
+                        </Card> : null
                     }
                     <Text style={styles.inspirationalText}>{inspirationalInsight}</Text>  
                     <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => console.log('Stats Pressed')}>
@@ -134,9 +111,12 @@ const styles = StyleSheet.create({
         
 
     },
+    removeTask: {
+        flexGrow: 0, 
+    },
 
     taskCard: {
-        marginTop: 10,
+        marginVertical: 10,
         marginHorizontal: 16,
 
     },
@@ -165,7 +145,7 @@ const styles = StyleSheet.create({
     taskName: {
         flexGrow: 1, 
         fontSize: 15,
-        width: 180,
+        width: 160,
         lineHeight: 36,
 
     },

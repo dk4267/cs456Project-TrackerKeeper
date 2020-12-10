@@ -1,79 +1,100 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, SafeAreaView , Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard  } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Context } from '../../context/TasksContext';
 
 
 
-const EditTasksScreen = ({ navigation }) => {
+const EditTasks = ({ initialName, taskId, editMode, callbackFunction }) => {
     const [isPickerVisible, setPickerVisibility] = useState(false);
+    const [mode, setMode] = useState("date");
+    const [date, setDate] = useState("");
+    const [addText, setAddText] = useState('');
+    const { addTasks, editTask } = useContext(Context);
 
-    const [mode, setMode] = useState("date")
 
     const showPicker = () => {
       setPickerVisibility(true);
     };
   
     const hidePicker = () => {
-      setDatePickerVisibility(false);
+      setPickerVisibility(false);
     };
   
-    const handleConfirm = () => {
-      console.warn("Something changed");
+    const handleConfirm = (userValue) => {
+      if (mode === "date") {
+          setDate(userValue);
+      }
+      else {
+          setTime(userValue);
+      }
       hidePicker();
     };
 
     return(
-        <TouchableWithoutFeedback onPress={ () => {Keyboard.dismiss();}}>
 
-            <SafeAreaView style={styles.container}>
-
-                <Text style={styles.headline}>
-                    Add your new task here:
-                </Text>
+            <View style={styles.taskItem}>
                 
-                <View style={styles.tasksInputContainer}>
-                    <TextInput style={styles.tasksInput} 
-                        placeholder=" New task..."
-                        multiline={true}/>
-                </View>
+                    <TextInput style={styles.taskInput} 
+                        placeholder={initialName === '' ? "New Task..." : initialName}
+                        onChangeText={text => setAddText(text)}
+                        />
+                <View style={styles.pickerContainer}>
+                    <TouchableOpacity style={styles.dateTimeButton} onPress={showPicker}>
+                        <Text style={styles.dateTimeLabel}>
+                            Choose Date
+                        </Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.dateTimeButton} onPress={showPicker}>
-                    <Text style={styles.dateTimeLabel}>
-                        Choose Date
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.dateTimeButton} onPress={()=>{showPicker(); {setMode("time")}}}>
-                    <Text style={styles.dateTimeLabel}>
-                        Choose Time
-                    </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.dateTimeButton} onPress={()=>{showPicker(); {setMode("time")}}}>
+                        <Text style={styles.dateTimeLabel}>
+                            Choose Time
+                        </Text>
+                    </TouchableOpacity>
+                
 
                 <DateTimePickerModal
                     isVisible={isPickerVisible}
                     mode={mode}
-                    onConfirm={handleConfirm}
+                    onConfirm={userValue => handleConfirm(userValue)}
                     onCancel={hidePicker}
                 /> 
 
-                <TouchableOpacity style={styles.doneButton} onPress={()=>console.log("New task created...")}>
+                <TouchableOpacity style={styles.doneButton} onPress={()=> {
+                    if (date === '' ) {
+                        setDate(new Date())
+
+                    }
+                    if (editMode) {
+                        
+                        editTask(taskId, addText, date);
+                        callbackFunction();
+                    }
+                    else {
+                       
+                        addTasks(addText, date);
+                        callbackFunction();
+                    }
+                }}>
                     <Text style={styles.doneLabel}>
-                        DONE
+                        Save
                     </Text>
                 </TouchableOpacity>
+                </View>
 
-            </SafeAreaView>
-
-        </TouchableWithoutFeedback>
+            </View>
         
     )
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,  
-        backgroundColor: "#BCE3FF",
+    taskItem: {
+
+        flex: 1,
+        padding: 10,
+        alignItems:"center",
+        
     },
 
     headline:{
@@ -84,9 +105,14 @@ const styles = StyleSheet.create({
         textAlignVertical:"center",
     },
 
-    taskInput:{
-        marginTop:20,
-        fontSize:50,
+    taskInput: {
+        flexGrow: 1, 
+        borderBottomColor: '#e3e3e3',
+        borderBottomWidth: 1,
+        paddingHorizontal: 5,
+        fontSize: 18,
+        width: 250,
+        backgroundColor: '#F0F0F0'
     },
 
     tasksInputContainer:{
@@ -94,31 +120,35 @@ const styles = StyleSheet.create({
         marginHorizontal:20,
         padding:5,
         justifyContent:"flex-start",
-        height:120,
         borderWidth:1,
         backgroundColor:"#f0ffff",
         elevation:6,
     },
 
+    pickerContainer: {
+        flexDirection: 'row'
+    },
+
     dateTimeButton:{
-        height:60,
-        marginTop:50,
-        marginHorizontal:50,
+        height:30,
+        marginTop:10,
+        marginHorizontal:10,
         justifyContent:"center",
         backgroundColor:"#f0f8ff",
         elevation:3,
     },
 
     dateTimeLabel:{
-        fontSize:20,
+        fontSize:14,
         textAlign:"center",
+        paddingHorizontal: 5
     },
 
 
     doneButton:{
-        height:90,
-        marginTop:70,
-        marginHorizontal:90,
+        height:30,
+        marginTop:10,
+        marginHorizontal:10,
         justifyContent:"center",
         backgroundColor:"#71B2E1",
         elevation:3,
@@ -126,10 +156,10 @@ const styles = StyleSheet.create({
 
     doneLabel:{
         fontSize:20,
-        fontWeight:"bold",
         textAlign:"center",
+        paddingHorizontal: 5
     },
 
 });
 
-export default EditTasksScreen;
+export default EditTasks;

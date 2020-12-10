@@ -17,7 +17,7 @@ const MainHabitsScreen = ({ navigation }) => {
 
     useEffect(() => {
         getHabits();
-    })
+    }, [state]);
 
     const setUpAddHabit = () => {
         setAddHabitActivated(true);
@@ -58,6 +58,7 @@ const MainHabitsScreen = ({ navigation }) => {
                             </Card>
                             :
                             <Card style={styles.habitCard} key={item.id} onLongPress={() => setUpEditHabit(item.id)} >
+
                                 <View style={styles.habitItem}>
                                     <Checkbox style={styles.habitCheckbox} color={Colors.text.primary} uncheckedColor={Colors.text.primary} status={item.checked ? 'checked' : 'unchecked'} onPress={() => markHabit(item.id, !item.checked)} />
                                   
