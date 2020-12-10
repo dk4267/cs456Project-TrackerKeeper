@@ -33,64 +33,41 @@ let chartColor = hexToRgb(Colors.habit);
 const HabitsComplete = {
     'today': {
         labels: ["Today"], // optional
-        data: [0.7],
+        data: [Math.floor(Math.random() * (40 - 100) + 100)/100],
     },
     'month': {
         labels: ["Month"], // optional
-        data: [0.1],
+        data: [Math.floor(Math.random() * (40 - 100) + 100)/100],
     },
     'year': {
         labels: ["Year"], // optional
-        data: [0.5],
+        data: [Math.floor(Math.random() * (40 - 100) + 100)/100],
     }
 };
 
 const HabitsHistory = {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"],
+    labels: Array.from({length: 14}, (_, i) => i + 1),
     datasets: [
         {
-        data: [20, 40, 40, 50, 40, 50, 60, 70, 80, 40, 60, 70, 100, 90],
+        data: Array.from({length: 14}, (_, i) => Math.floor(Math.random() * (60 - 100) + 100)/100),
         color: (opacity = 1) => `rgba(${chartColor[0]}, ${chartColor[1]}, ${chartColor[2]}, ${opacity})`, // optional
         strokeWidth: 2 // optional
         }
     ],
 };
 
-const progressData = [
-    { date: "2020-09-07", count: 5},
-    { date: "2020-09-14", count: 5},
-    { date: "2020-09-21", count: 5},
-    { date: "2020-09-28", count: 5},
-    { date: "2020-10-05", count: 5},
-    { date: "2020-10-12", count: 5},
-    { date: "2020-10-19", count: 5},
-    { date: "2020-10-26", count: 5},
-    { date: "2020-11-02", count: 5},
-    { date: "2020-11-09", count: 5},
-    { date: "2020-11-16", count: 5},
-    { date: "2020-11-23", count: 5},
-    { date: "2020-11-30", count: 5},
-    { date: "2020-09-01", count: 1},
-    { date: "2020-09-08", count: 1},
-    { date: "2020-09-15", count: 5},
-    { date: "2020-09-22", count: 4},
-    { date: "2020-09-29", count: 1},
-    { date: "2020-10-06", count: 5},
-    { date: "2020-10-13", count: 4},
-    { date: "2020-10-20", count: 5},
-    { date: "2020-10-27", count: 5},
-    { date: "2020-11-03", count: 5},
-    { date: "2020-11-10", count: 5},
-    { date: "2020-11-17", count: 5},
-    { date: "2020-11-24", count: 0},
-    { date: "2020-12-01", count: 5},
-];
+const progressData = Array.from({length: 92}, function(_, i) {
+    let tmpDate = new Date()
+    tmpDate.setDate(tmpDate.getDate() - i);
+    return {date: tmpDate.toISOString(), count: Math.floor(Math.random() * (1 - 6) + 6)};
+});
+
 
 const habitStreak = {
     labels: ["Meditate", "Run Trails", "Make Bed", "Journal", "Vitamins",],
     datasets: [
         {
-        data: [45, 44, 28, 80, 99],
+        data: Array.from({length: 5}, (_, i) => Math.floor(Math.random() * (1 - 100) + 100)),
         color: (opacity = 1) => `rgba(${chartColor[0]}, ${chartColor[1]}, ${chartColor[2]}, ${opacity})`, // optional
         strokeWidth: 10, // optional
         fillShadowGradient: Colors.habit,
