@@ -2,10 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Goals from '../../components/Goals';
 import {Colors} from '../../components/DarkTheme';
-import { LogBox } from 'react-native';
-
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();
 
 const HomeScreen = ({ navigation }) => {
 
