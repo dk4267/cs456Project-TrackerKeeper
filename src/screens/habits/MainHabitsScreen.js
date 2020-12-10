@@ -19,6 +19,10 @@ const MainHabitsScreen = ({ navigation }) => {
         getHabits();
     }, [state]);
 
+    useEffect(() => {
+        navigation.setParams({addfunction: setUpAddHabit});
+    }, [])
+
     const setUpAddHabit = () => {
         setAddHabitActivated(true);
     }
@@ -33,7 +37,7 @@ const MainHabitsScreen = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.habitTitle} onPress={() => setUpAddHabit()}>
+                    <Text style={styles.habitTitle}>
                         Your Habits
                     </Text>
                 </View>
@@ -95,9 +99,10 @@ const MainHabitsScreen = ({ navigation }) => {
 
 
 MainHabitsScreen.navigationOptions = ({ navigation }) => {
+    let addFunct = navigation.getParam('addfunction');
     return {
         headerRight: () => (
-            <FAB icon="plus" style={styles.addButton} color={Colors.text.darkPrimary} onPress={() => setUpAddHabit()} />  
+            <FAB icon="plus" style={styles.addButton} color={Colors.text.darkPrimary} onPress={() => addFunct()} />  
         )
     }
 }
