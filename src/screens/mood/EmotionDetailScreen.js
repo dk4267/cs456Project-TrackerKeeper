@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, ScrollView, TouchableWithoutFeedback, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, ScrollView, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { Directions } from 'react-native-gesture-handler';
 import {Colors} from '../../components/DarkTheme';
 
@@ -118,23 +118,17 @@ const EmotionDetailScreen = ({ navigation }) => {
                 <Text style={styles.titleText}>Write in</Text>
                 <TextInput style={styles.inputStyles} value={mood} multiline={true} maxLength={80} onChangeText={(text) => setMood(text)}/>
                 <View style={styles.flexBox3}>
-                    <Button style={styles.statsButton} color={Colors.dp08} labelStyle={styles.statsButtonText}
-                    onPress={() => alert("Mood Saved")}
-                    title="Save mood"
-                    
-                    />
-                    <Button style={styles.statsButton} color={Colors.dp08} labelStyle={styles.statsButtonText}
-                    onPress={() => alert("Mood Removed")}
-                    title="Remove mood"
-                    
-                    />
+                    <TouchableOpacity style={styles.statsButton} onPress={() => alert("Mood Saved")}>
+                        <Text style={styles.statsButtonText}>Save Mood</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.statsButton} onPress={() => alert("Mood Removed")}>
+                        <Text style={styles.statsButtonText}>Remove mood</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flexBox3}>
-                <Button style={styles.statsButton} color={Colors.dp08}  labelStyle={styles.statsButtonText}
-                  onPress={() => navigation.navigate('Journal')}
-                  title="Next"
-                  
-                />
+                <TouchableOpacity style={styles.statsButton} onPress={() => navigation.navigate('Journal')}>
+                  <Text style={styles.statsButtonText}>Next</Text>
+              </TouchableOpacity>
                 </View>
 
                 <Text style={styles.textStyles2}>Icons created by Austin Condiff from Noun Project</Text>
@@ -219,16 +213,14 @@ const styles = StyleSheet.create({
         height: 150,       
     },
     statsButton: {
-        height: 50,
+        padding: 12,
+        borderRadius: 3,
         backgroundColor: Colors.mood
     },
     statsButtonText: {
-        color: Colors.text.darkPrimary
+        fontSize: 16,
+        color: Colors.text.darkSecondary
     },
-    statsButtonContent: {
-        height: 100,
-        color: Colors.mood
-    }, 
 })
 
 export default EmotionDetailScreen;
