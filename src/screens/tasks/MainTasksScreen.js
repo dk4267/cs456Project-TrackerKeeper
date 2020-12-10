@@ -87,7 +87,7 @@ MainTasksScreen.navigationOptions = ({ navigation }) => {
     let addFunct = navigation.getParam('addfunction');
     return {
         headerRight: () => (
-            <FAB icon="plus" style={styles.addButton} color={Colors.text.darkPrimary} onPress={() => addFunct()} />  
+            <FAB icon="plus" style={styles.addButton} color={Colors.text.primary} onPress={() => addFunct()} />  
         )
     }
 }

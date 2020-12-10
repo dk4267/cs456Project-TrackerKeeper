@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         height: 150,       
     },
     buttonStyles: {
-        opacity: .7,
+        opacity: .8,
         width: 150,
         height: 150,       
     },

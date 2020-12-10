@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.mood
     },
     statsButtonText: {
-        color: Colors.text.darkSecondary,
+        color: Colors.text.darkPrimary,
         textAlign: 'center',
         fontSize: 20,
     },
