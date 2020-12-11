@@ -4,6 +4,7 @@ import { Context } from '../../context/TasksContext';
 import { Card, List, Checkbox, Button, FAB, Icon,  } from 'react-native-paper';
 import EditTasks from './EditTasksScreen';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import {Colors} from '../../components/DarkTheme';
 
 
 
@@ -21,6 +22,10 @@ const MainTasksScreen = ({ navigation }) => {
 
     }, [state]);
 
+    useEffect(() => {
+        navigation.setParams({addfunction: setUpAddTask});
+    }, [])
+
     const setUpAddTask = () => {
         setAddTaskActivated(true);
     }
@@ -31,8 +36,7 @@ const MainTasksScreen = ({ navigation }) => {
 
     return (
         
-        <SafeAreaView style={styles.container}>
-        <FAB icon="plus" style={styles.addButton} onPress={() => setUpAddTask()} />    
+        <SafeAreaView style={styles.container}>  
             <ScrollView style={styles.scrollView}>
                 <View style={styles.titleContainer}>
                 
@@ -50,12 +54,12 @@ const MainTasksScreen = ({ navigation }) => {
                                 </Card> :
                             <Card style={styles.taskCard} key={item.taskName} onLongPress={ () => setUpEditTask(item.id) }>
                                 <View style={styles.taskItem}>
-                                    <Checkbox style={styles.taskCheckbox} checked='unchecked' key={item.taskName} onPress={() => markTask(item.id)} />
+                                    <Checkbox style={styles.taskCheckbox} color={Colors.text.primary} uncheckedColor={Colors.text.primary} checked='unchecked' key={item.taskName} onPress={() => markTask(item.id)} />
                                    
                                     <Text style={styles.taskName}>{item.taskName}</Text>
                                     
                                     <View style={styles.taskDate}>
-                                        <Text>{item.dueDate}</Text>
+                                        <Text style={styles.taskDateText}>{item.dueDate}</Text>
                                     </View>
                                     <MaterialIcons name="delete-forever" style={styles.removeTask} size={30} onPress={() => deleteTask(item.id)} />
 
@@ -70,7 +74,7 @@ const MainTasksScreen = ({ navigation }) => {
                         </Card> : null
                     }
                     <Text style={styles.inspirationalText}>{inspirationalInsight}</Text>  
-                    <Button icon="chart-bar" contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => console.log('Stats Pressed')}>
+                    <Button icon="chart-bar" color={Colors.task} contentStyle={styles.statsButtonContent} style={styles.statsButton} labelStyle={styles.statsButtonText} mode="contained" onPress={() => navigation.navigate('TasksStats')}>
                         See stats about your tasks
                     </Button>  
             </ScrollView>
@@ -79,9 +83,20 @@ const MainTasksScreen = ({ navigation }) => {
 
 }
 
+MainTasksScreen.navigationOptions = ({ navigation }) => {
+    let addFunct = navigation.getParam('addfunction');
+    return {
+        headerRight: () => (
+            <FAB icon="plus" style={styles.addButton} color={Colors.text.primary} onPress={() => addFunct()} />  
+        )
+    }
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.background,
+        color: Colors.text.primary,
     },
     scrollView: {
         flex: 1,
@@ -100,29 +115,33 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         fontSize: 24,
         fontWeight: 'bold',
+        color: Colors.text.primary,
     },
     addButton: {
         margin: 16,
         padding: 8,
         position:'absolute',
-        right:16,
-        top:-56,
-        borderRadius: 100
+        right:0,
+        top:0,
+        backgroundColor: Colors.task,
+        color: Colors.text.darkPrimary,
+        borderRadius: 100,
         
 
     },
     removeTask: {
         flexGrow: 0, 
+        color: Colors.text.primary,
     },
 
     taskCard: {
         marginVertical: 10,
         marginHorizontal: 16,
-
+        backgroundColor: Colors.surface,
     },
 
     taskItem: {
-
+        color: Colors.text.primary,
         flex: 1,
         flexDirection: 'row',
         padding: 10,
@@ -132,34 +151,40 @@ const styles = StyleSheet.create({
 
     taskCheckbox: {
         flexGrow: 0, 
+        color: Colors.text.primary,
+        backgroundColor: Colors.text.primary,
     },
     taskInput: {
         flexGrow: 1, 
-        borderBottomColor: '#e3e3e3',
+        borderBottomColor: Colors.task,
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         fontSize: 18,
         width: 250,
-        backgroundColor: '#F0F0F0'
+        backgroundColor: Colors.dp02,
+        color: Colors.text.primary,
     },
     taskName: {
         flexGrow: 1, 
         fontSize: 15,
         width: 160,
         lineHeight: 36,
-
+        color: Colors.text.primary,
     },
     taskDate: {
         flexGrow: 0, 
         marginLeft: 5,
         fontSize: 8,
     },
+    taskDateText: {
+        color: Colors.text.primary,
+    },
     inspirationalText: {
         fontSize:36,
         textAlign: 'center',
         paddingVertical: 24,
         paddingHorizontal: 16,
-        opacity: .4,
+        color: Colors.text.primary,
 
     },
     statsButton: {

@@ -1,7 +1,12 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, LogBox} from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+
+if(typeof LogBox !== 'undefined') {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();
+}
 
 import {Colors} from './src/components/DarkTheme';
 

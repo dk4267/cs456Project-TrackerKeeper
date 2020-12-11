@@ -22,6 +22,15 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <Goals nav={navigation}/>
+            <View style={styles.creatorsContainer}>
+                <Text style={styles.creatorsText}>Created by</Text>
+                <Text style={styles.creatorsText}>
+                    Debbie Kirchner,
+                    Scott Howard,
+                    Chris Munns,
+                    Long Dang
+                </Text>
+            </View>
         </View>
     )
 }
@@ -70,6 +79,16 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
         marginRight: 15
+    },
+    creatorsContainer:{
+        marginTop: 'auto',
+        padding: 15,
+        alignItems: "center",
+        textAlign: 'center',
+    },
+    creatorsText: {
+        color: Colors.text.secondary,
+        textAlign: 'center',
     }
 
 });

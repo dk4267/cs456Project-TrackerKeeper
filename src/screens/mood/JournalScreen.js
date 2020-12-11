@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity } from 'react-native';
 import {Colors} from '../../components/DarkTheme';
 
 const JournalScreen = ({ navigation}) => {
@@ -10,7 +10,9 @@ const JournalScreen = ({ navigation}) => {
         <View style={styles.container}>
             <Text style={styles.textStyles}>Have any thoughts you'd like to jot down today?</Text>
             <TextInput style={styles.inputStyles} value={mood} multiline={true} maxLength={80} onChangeText={(text) => setMood(text)}/>
-            <Button title="Save and go to stats"  color={Colors.dp08} labelStyle={styles.statsButtonText} onPress={() => navigation.navigate('MoodStats')}/>
+            <TouchableOpacity style={styles.statsButton} onPress={() => navigation.navigate('MoodStats')}>
+                <Text style={styles.statsButtonText}>Save and go to stats</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -47,6 +49,17 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
 
         
+    },
+
+    statsButton: {
+        padding: 12,
+        borderRadius: 3,
+        backgroundColor: Colors.mood
+    },
+    statsButtonText: {
+        color: Colors.text.darkPrimary,
+        textAlign: 'center',
+        fontSize: 20,
     },
 })
 

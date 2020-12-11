@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     },  
     buttonStyles: {
         
-        opacity: 0.7,
+        opacity: 0.8,
         width: 75,
         height: 75,       
     },

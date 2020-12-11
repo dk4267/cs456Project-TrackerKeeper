@@ -242,12 +242,9 @@ const MoodStatsScreen = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.flexBox3}>
-                <Button 
-                    title="Return to Main screen"
-                    backgroundColor=''
-                    onPress={() => navigation.navigate('Home')}
-                    color={Colors.dp08}
-                />
+                    <TouchableOpacity style={styles.statsButton} onPress={() => navigation.navigate('Home')}>
+                        <Text style={styles.statsButtonText}>Return to Main screen</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style ={{ justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={styles.textStyles2}>Icons created by Austin Condiff from Noun Project</Text>
@@ -261,6 +258,16 @@ const MoodStatsScreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+    statsButton: {
+        padding: 12,
+        borderRadius: 3,
+        backgroundColor: Colors.mood
+    },
+    statsButtonText: {
+        color: Colors.text.darkPrimary,
+        textAlign: 'center',
+        fontSize: 20,
+    },
     flexBox3: {
         flex: 1,
         flexDirection: 'row',
@@ -293,7 +300,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         width: 75,
         height: 75,
-        opacity: .7,
+        opacity: .8,
     },
     titleContainer: {
         color: 'white',

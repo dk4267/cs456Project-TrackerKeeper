@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, SafeAreaView , Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard  } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Context } from '../../context/TasksContext';
+import {Colors} from '../../components/DarkTheme';
 
 
 
@@ -36,6 +37,7 @@ const EditTasks = ({ initialName, taskId, editMode, callbackFunction }) => {
             <View style={styles.taskItem}>
                 
                     <TextInput style={styles.taskInput} 
+                        placeholderTextColor={Colors.text.secondary}
                         placeholder={initialName === '' ? "New Task..." : initialName}
                         onChangeText={text => setAddText(text)}
                         />
@@ -107,12 +109,13 @@ const styles = StyleSheet.create({
 
     taskInput: {
         flexGrow: 1, 
-        borderBottomColor: '#e3e3e3',
+        borderBottomColor: Colors.task,
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         fontSize: 18,
         width: 250,
-        backgroundColor: '#F0F0F0'
+        backgroundColor: Colors.dp02,
+        color: Colors.text.primary,
     },
 
     tasksInputContainer:{
@@ -134,14 +137,15 @@ const styles = StyleSheet.create({
         marginTop:10,
         marginHorizontal:10,
         justifyContent:"center",
-        backgroundColor:"#f0f8ff",
         elevation:3,
+        backgroundColor: Colors.task,
     },
 
     dateTimeLabel:{
         fontSize:14,
         textAlign:"center",
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        color: Colors.text.primary,
     },
 
 
@@ -150,14 +154,15 @@ const styles = StyleSheet.create({
         marginTop:10,
         marginHorizontal:10,
         justifyContent:"center",
-        backgroundColor:"#71B2E1",
+        backgroundColor: Colors.task,
         elevation:3,
     },
 
     doneLabel:{
         fontSize:20,
         textAlign:"center",
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        color: Colors.text.primary,
     },
 
 });

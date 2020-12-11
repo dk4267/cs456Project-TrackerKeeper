@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { KeyboardAvoidingView, View, Text, StyleSheet, Button, Image, TouchableOpacity, Platform, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Context as GoalsContext } from '../../context/GoalsContext';
+import {Colors} from '../../components/DarkTheme';
 
 const EditGoalsScreen = ({ navigation }) => {
 
@@ -34,9 +35,6 @@ const EditGoalsScreen = ({ navigation }) => {
 
 EditGoalsScreen.navigationOptions = ({ navigation }) => {
     return {
-        headerStyle: {
-            backgroundColor: '#71B2E1'
-        },
         headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("Calendar")} >
                 <Image style={styles.navIcon} source={require('./assets/AnalyticsLink.png')} />
@@ -51,19 +49,21 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         marginVertical: 5,
         textAlign: "center",
+        color: Colors.text.primary,
     },
     mainStyles: {     
-        backgroundColor: '#BCE3FF',
+        backgroundColor: Colors.background,
         flex: 1     
     },
     outerContainer: {
         alignItems: "center",        
     },
     inputStyles: {
-        backgroundColor: 'white',
+        backgroundColor: Colors.dp02,
+        color: Colors.text.primary,
         fontSize: 18,
-        borderWidth: 1,
-        borderColor: 'black',
+        borderBottomColor: Colors.goal,
+        borderBottomWidth: 1,
         marginBottom: 15,
         padding: 5,
         margin: 5,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         height: 45,
         width: 60,
         padding: 10, 
-        backgroundColor: "#71B2E1",
+        backgroundColor: Colors.goal,
         alignSelf: "center"
     },
     navIcon: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     buttonText: {
-        color: "black",
+        color: Colors.text.primary,
         fontSize: 18
     },
     innerView: {
